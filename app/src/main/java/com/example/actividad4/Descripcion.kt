@@ -31,8 +31,6 @@ fun Description(onNavigateToCalculadora: () -> Unit) {
             Text(text = "- Resta: Resta un número de otro.")
             Text(text = "- Multiplicación: Multiplica dos o más números.")
             Text(text = "- División: Divide un número por otro.")
-            Text(text = "- Raíz Cuadrada: Calcula la raíz cuadrada de un número.")
-            Text(text = "- Funciones Cuadráticas: Resuelve ecuaciones cuadráticas.")
             Text(text = "- Otras funciones matemáticas avanzadas para cálculos específicos.")
 
             Spacer(modifier = Modifier.height(16.dp))

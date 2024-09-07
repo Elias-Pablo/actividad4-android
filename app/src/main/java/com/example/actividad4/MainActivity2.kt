@@ -17,7 +17,6 @@ class MainActivity2 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         val historial = intent.getStringArrayListExtra("historial")
 
         setContent {
@@ -32,7 +31,8 @@ class MainActivity2 : ComponentActivity() {
 
 @Composable
 fun HistorialScreen(historial: List<String>) {
-    var contexto = LocalContext.current
+    val contexto = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,18 +42,19 @@ fun HistorialScreen(historial: List<String>) {
     ) {
         Text(text = "Historial de Operaciones", modifier = Modifier.padding(bottom = 16.dp))
 
-
         historial.forEach { operacion ->
-            Text(text = operacion, modifier = Modifier.padding(bottom = 8.dp))
-        }
-        Row {
-            Button(onClick = {
-                val volverCalculadora = Intent(contexto, MainActivity::class.java)
-                contexto.startActivity(volverCalculadora)
-            }) {
-                Text(text = "Volver al Home")
+            Button(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                onClick = {
+
+                    val volverCalculadora = Intent(contexto, CalculadoraActivity::class.java).apply {
+                        putExtra("operacionSeleccionada", operacion)
+                    }
+                    contexto.startActivity(volverCalculadora)
+                }
+            ) {
+                Text(text = operacion)
             }
         }
     }
-
 }

@@ -16,14 +16,15 @@ import androidx.compose.ui.unit.dp
 import org.mariuszgromada.math.mxparser.Expression
 
 @Composable
-fun Calculadora() {
+fun Calculadora(operacionSeleccionada: String? = null) {
     var resultado = remember { mutableListOf<String>() }
     var contexto = LocalContext.current
-    var input1 by remember { mutableStateOf("") }
-    var input2 by remember { mutableStateOf("") }
+    var input1 by remember { mutableStateOf(operacionSeleccionada ?: "") }  // Si hay operación, la usamos
     var result by remember { mutableStateOf("") }
     var operation by remember { mutableStateOf<String?>(null) }
-    var isOperatorPressed by remember { mutableStateOf(false) }  // Nuevo estado para gestionar operadores
+    var isOperatorPressed by remember { mutableStateOf(false) }
+
+
 
     Box(
         contentAlignment = Alignment.Center,
@@ -59,7 +60,7 @@ fun Calculadora() {
                     ),
                     onClick = {
                         input1 = ""
-                        input2 = ""
+
                         result = ""
                         operation = null
                         isOperatorPressed = false
@@ -356,9 +357,7 @@ fun Calculadora() {
             }
 
 
-            Row {
-                Text(text = resultado.joinToString(separator = "\n"))
-            }
+
 
         }
     }
