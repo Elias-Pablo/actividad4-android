@@ -1,5 +1,6 @@
 package com.example.actividad4
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -10,11 +11,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import org.mariuszgromada.math.mxparser.Expression
 
 @Composable
 fun Calculadora() {
+    var resultado = mutableListOf("")
+    var contexto = LocalContext.current
     var input1 by remember { mutableStateOf("") }
     var input2 by remember { mutableStateOf("") }
     var result by remember { mutableStateOf("") }
@@ -329,18 +333,29 @@ fun Calculadora() {
                         contentColor = Color.Black
                     ),
                     onClick = {
+                        resultado.add(input1+result)
                         val expression = Expression(input1.replace("x", "*").replace("÷", "/"))
                         result = expression.calculate().toString()
+
                     }) {
                     Text(text = "=")
                 }
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
             Row {
-                Text(text = result, color = Color.White)
+                Button( onClick = {
+                    var llamarRegistro = Intent(contexto, MainActivity2::class.java)
+                    contexto.startActivity(llamarRegistro)
+
+                }
+
+
+                ) {
+
+                    Text(text = "ir al Historial")
+                }
+                Text(text="$resultado")
             }
+
         }
     }
 }
