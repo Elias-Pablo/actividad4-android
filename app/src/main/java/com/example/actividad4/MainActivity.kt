@@ -33,6 +33,6 @@ fun MyApp() {
     when (currentScreen) {
         "bienvenida" -> Bienvenida(onNavigateToDescription = { currentScreen = "description" })
         "description" -> Description(onNavigateToCalculadora = { currentScreen = "calculadora" })
-        "calculadora" -> Calculadora() // Aquí debes definir tu composable para la pantalla de la calculadora
+        "calculadora" -> Calculadora()
     }
 }

@@ -17,7 +17,7 @@ import org.mariuszgromada.math.mxparser.Expression
 
 @Composable
 fun Calculadora() {
-    var resultado = mutableListOf("")
+    var resultado = remember { mutableListOf<String>() }
     var contexto = LocalContext.current
     var input1 by remember { mutableStateOf("") }
     var input2 by remember { mutableStateOf("") }
@@ -333,27 +333,31 @@ fun Calculadora() {
                         contentColor = Color.Black
                     ),
                     onClick = {
-                        resultado.add(input1+result)
+
                         val expression = Expression(input1.replace("x", "*").replace("÷", "/"))
                         result = expression.calculate().toString()
+                        resultado.add("$input1 = $result")
 
                     }) {
                     Text(text = "=")
                 }
             }
             Row {
-                Button( onClick = {
-                    var llamarRegistro = Intent(contexto, MainActivity2::class.java)
-                    contexto.startActivity(llamarRegistro)
+                Button(
+                    onClick = {
 
+                        val llamarRegistro = Intent(contexto, MainActivity2::class.java).apply {
+                            putStringArrayListExtra("historial", ArrayList(resultado))
+                        }
+                        contexto.startActivity(llamarRegistro)
+                    }) {
+                    Text(text = "Ir al Historial")
                 }
+            }
 
 
-                ) {
-
-                    Text(text = "ir al Historial")
-                }
-                Text(text="$resultado")
+            Row {
+                Text(text = resultado.joinToString(separator = "\n"))
             }
 
         }
